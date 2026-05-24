@@ -1,0 +1,6 @@
+{
+  "name": "حاسبة العملات الذكية",
+  "description": "حاسبة عملات ذكية ومساعد سفر مخصص لمساعدة المسافرين في معرفة أسعار السلع بعملتهم المحلية فوراً وبشكل مبسط.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
