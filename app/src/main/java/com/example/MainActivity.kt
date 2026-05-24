@@ -158,6 +158,16 @@ fun SplashScreen(onTimeout: () -> Unit) {
                     strokeWidth = 2.5.dp,
                     modifier = Modifier.size(22.dp)
                 )
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                Text(
+                    text = "Developed by Abu Watan",
+                    color = Color.White.copy(alpha = 0.5f),
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Medium,
+                    style = TextStyle(letterSpacing = 0.5.sp)
+                )
             }
         }
     }

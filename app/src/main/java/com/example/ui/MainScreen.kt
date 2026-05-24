@@ -1247,6 +1247,34 @@ fun MainScreen(
                                 )
                             }
                         }
+
+                        item {
+                            Spacer(modifier = Modifier.height(24.dp))
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Code,
+                                        contentDescription = null,
+                                        tint = HighDensityMutedText.copy(alpha = 0.6f),
+                                        modifier = Modifier.size(14.dp)
+                                    )
+                                    Text(
+                                        text = "Developed by Abu Watan",
+                                        fontSize = 11.sp,
+                                        color = HighDensityMutedText.copy(alpha = 0.7f),
+                                        fontWeight = FontWeight.SemiBold,
+                                        style = androidx.compose.ui.text.TextStyle(letterSpacing = 0.3.sp)
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
                     }
                 }
 
