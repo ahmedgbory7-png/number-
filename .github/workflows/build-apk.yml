@@ -1,0 +1,61 @@
+name: Build and Release Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Restore Keystore
+        run: |
+          if [ -f "debug.keystore.base64" ]; then
+            base64 -d debug.keystore.base64 > debug.keystore
+          else
+            echo "No base64 keystore found, using Gradle default fallback"
+          fi
+
+      - name: Build Debug APK
+        run: gradle :app:assembleDebug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Automatic Release APK
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        with:
+          tag_name: latest
+          name: "حاسبة العملات الذكية مساعد السفر - APK"
+          body: |
+            نسخة الـ APK الجاهزة للتثبيت والمبنية تلقائياً بنجاح بواسطة GitHub Actions.
+            مطور بواسطة: ابو وطن (Abu Watan).
+            
+            **تاريخ البناء:** ${{ github.event.head_commit.timestamp }}
+          draft: false
+          prerelease: false
+          files: app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

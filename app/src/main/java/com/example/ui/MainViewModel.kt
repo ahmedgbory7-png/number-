@@ -28,9 +28,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val currencyNamesAr = repository.currencyNamesAr
 
     // Localization and My Country Preferences (Automatically Loaded and Saved)
-    val selectedLanguage = MutableStateFlow(prefs.getString("selected_language", "ar") ?: "ar")
-    val myCountryName = MutableStateFlow(prefs.getString("my_country_name", "العراق") ?: "العراق")
-    val myCountryCurrency = MutableStateFlow(prefs.getString("my_country_currency", "IQD") ?: "IQD")
+    val selectedLanguage = MutableStateFlow(
+        try { prefs.getString("selected_language", "ar") ?: "ar" } catch (e: Exception) { "ar" }
+    )
+    val myCountryName = MutableStateFlow(
+        try { prefs.getString("my_country_name", "العراق") ?: "العراق" } catch (e: Exception) { "العراق" }
+    )
+    val myCountryCurrency = MutableStateFlow(
+        try { prefs.getString("my_country_currency", "IQD") ?: "IQD" } catch (e: Exception) { "IQD" }
+    )
 
     // State for Smart Converter
     val promptText = MutableStateFlow("")
@@ -58,7 +64,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val historicalUiState: StateFlow<UiState> = _historicalUiState.asStateFlow()
 
     // Saved API key configuration
-    private val _customApiKey = MutableStateFlow(prefs.getString("custom_api_key", "") ?: "")
+    private val _customApiKey = MutableStateFlow(
+        try { prefs.getString("custom_api_key", "") ?: "" } catch (e: Exception) { "" }
+    )
     val customApiKey: StateFlow<String> = _customApiKey.asStateFlow()
 
     // History Flow from Room DB
